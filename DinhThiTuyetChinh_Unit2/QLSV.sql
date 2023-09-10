@@ -1,0 +1,103 @@
+﻿CREATE DATABASE QLSV
+
+USE QLSV
+GO
+
+---- Khoa (MaKhoa, TenKhoa)
+CREATE TABLE KHOA
+(
+	MAKHOA CHAR(10) NOT NULL,
+	TENKHOA NVARCHAR(50),
+	CONSTRAINT PK_KHOA PRIMARY KEY (MAKHOA)
+)
+---- Lop (MaLop, TenLop,MaKhoa)
+CREATE TABLE LOP
+(
+	MALOP CHAR(10) NOT NULL,
+	TENLOP NVARCHAR(50),
+	MAKHOA CHAR(10),
+	CONSTRAINT PK_LOP PRIMARY KEY (MALOP),
+	CONSTRAINT FK_LOP_KHOA FOREIGN KEY (MAKHOA) REFERENCES KHOA(MAKHOA) ON DELETE CASCADE
+)
+---- SinhVien (MaSV, HoTen, NgaySinh, MaLop)
+ CREATE TABLE SINHVIEN
+ (
+	MASV CHAR(10),
+	HOTEN NVARCHAR(50),
+	NGAYSINH DATE,
+	MALOP CHAR(10),
+	CONSTRAINT PK_SV PRIMARY KEY (MASV),
+	CONSTRAINT FK_SV_LOP FOREIGN KEY (MALOP) REFERENCES LOP(MALOP) ON DELETE CASCADE
+)
+---- MonHoc (MaMonHoc, TenMonHoc)
+CREATE TABLE MONHOC
+(
+	MAMH CHAR(10) NOT NULL,
+	TENMH NVARCHAR(50),
+	CONSTRAINT PK_MH PRIMARY KEY (MAMH)
+)
+---- Diem (MaSV, MaMonHoc, Diem)
+CREATE TABLE DIEM
+(
+	MASV CHAR(10) NOT NULL,
+	MAMH CHAR(10) NOT NULL,
+	DIEM FLOAT,
+	CONSTRAINT PK_DIEM PRIMARY KEY (MASV, MAMH),
+	CONSTRAINT FK_DIEM_SV FOREIGN KEY (MASV) REFERENCES SINHVIEN(MASV) ON DELETE CASCADE,
+	CONSTRAINT FK_DIEM_MH FOREIGN KEY (MAMH) REFERENCES MONHOC(MAMH) ON DELETE CASCADE
+)
+
+INSERT INTO KHOA
+VALUES
+('SH', N'Công Nghệ Sinh Học'),
+ ('TH', N'Công Nghệ Thông Tin'),
+ ('TP', N'Công Nghệ Thực Phẩm'),
+ ('QT', N'Quản Trị Kinh Doanh'),
+ ('TC', N'Tài Chính Kế Toán');
+
+ INSERT INTO LOP
+ VALUES
+ ('10DHSH1', N'10 Đại học sinh học 1', 'SH'),
+ ('10DHTH1', N'10 Đại học tin học 1', 'TH'),
+ ('11DHTH2', N'11 Đại học tin học 2', 'TH'),
+ ('12DHTC1', N'12 Đại học tài chính 1', 'TC'),
+ ('12DHTP1', N'12 Đại học thực phẩm 1', 'TP');
+
+  INSERT INTO SINHVIEN
+ VALUES
+ ('SV001',N'Trần Lệ Quyên', '1995-01-21', '10DHTH1'),
+ ('SV002',N'Nguyễn Thế Bình', '1996-06-04', '11DHTH2'),
+ ('SV003',N'Tô Ánh Nguyệt', '1995-05-02', '12DHTP1'),
+ ('SV004',N'Nguyễn Thế Anh', '1996-12-15', '12DHTP1'),
+ ('SV005',N'Lê Thanh Bình', '1994-12-09', '10DHTH1'),
+ ('SV006',N'Phạm Quang Hậu', '1995-10-12', '10DHTH1'),
+ ('SV007',N'Lê Cẩm Tú', '1989-02-13', '12DHTP1'),
+ ('SV008',N'Trương Thế Sang', '1993-04-04', '10DHSH1'),
+ ('SV009',N'Đậu Quang Ánh', '1994-12-03', '12DHTC1'),
+ ('SV0010',N'Huỳnh Kim Chi', '1996-10-18', '11DHTH2'),
+ ('SV0011',N'Trịnh Đình Ánh', '1995-11-15', '10DHTH1');
+
+  INSERT INTO MONHOC
+ VALUES
+ ('CSDL', N'Cơ sở dữ liệu'),
+ ('KTLT', N'Kỹ thuật lập trình'),
+ ('THVP', N'Tin học văn phòng'),
+ ('TRR', N'Toán rời rạc'),
+ ('TTNT', N'Trí tuệ nhân tạo'),
+ ('TTQT', N'Thanh toán quốc tế');
+
+ INSERT INTO DIEM
+ VALUES
+ ('SV001', 'CSDL', 9),
+ ('SV002', 'THVP', 3),
+ ('SV003', 'THVP', 7),
+ ('SV004', 'THVP', 6),
+ ('SV005', 'TTQT', 5),
+ ('SV006', 'CSDL', 3),
+ ('SV007', 'CSDL', 6),
+ ('SV008', 'KTLT', 4),
+ ('SV009', 'TTQT', 4),
+ ('SV0010', 'THVP', 8),
+ ('SV0011', 'TRR', 7);
+
+ SELECT * FROM DIEM

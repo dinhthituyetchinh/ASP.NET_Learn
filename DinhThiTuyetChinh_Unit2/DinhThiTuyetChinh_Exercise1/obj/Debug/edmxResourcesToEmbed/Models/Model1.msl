@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities1">
+    <EntitySetMapping Name="DIEMs">
+      <EntityTypeMapping TypeName="Database1Model.DIEM">
+        <MappingFragment StoreEntitySet="DIEM">
+          <ScalarProperty Name="MASV" ColumnName="MASV" />
+          <ScalarProperty Name="MAMH" ColumnName="MAMH" />
+          <ScalarProperty Name="DIEM1" ColumnName="DIEM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KHOAs">
+      <EntityTypeMapping TypeName="Database1Model.KHOA">
+        <MappingFragment StoreEntitySet="KHOA">
+          <ScalarProperty Name="MAKHOA" ColumnName="MAKHOA" />
+          <ScalarProperty Name="TENKHOA" ColumnName="TENKHOA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOPs">
+      <EntityTypeMapping TypeName="Database1Model.LOP">
+        <MappingFragment StoreEntitySet="LOP">
+          <ScalarProperty Name="MALOP" ColumnName="MALOP" />
+          <ScalarProperty Name="TENLOP" ColumnName="TENLOP" />
+          <ScalarProperty Name="MAKHOA" ColumnName="MAKHOA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MONHOCs">
+      <EntityTypeMapping TypeName="Database1Model.MONHOC">
+        <MappingFragment StoreEntitySet="MONHOC">
+          <ScalarProperty Name="MAMH" ColumnName="MAMH" />
+          <ScalarProperty Name="TENMH" ColumnName="TENMH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SINHVIENs">
+      <EntityTypeMapping TypeName="Database1Model.SINHVIEN">
+        <MappingFragment StoreEntitySet="SINHVIEN">
+          <ScalarProperty Name="MASV" ColumnName="MASV" />
+          <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+          <ScalarProperty Name="NGAYSINH" ColumnName="NGAYSINH" />
+          <ScalarProperty Name="MALOP" ColumnName="MALOP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

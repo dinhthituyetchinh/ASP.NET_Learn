@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DIEM">
+    <Key>
+      <PropertyRef Name="MASV" />
+      <PropertyRef Name="MAMH" />
+    </Key>
+    <Property Name="MASV" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="MAMH" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="DIEM1" Type="Double" />
+    <NavigationProperty Name="MONHOC" Relationship="Self.FK_DIEM_MH" FromRole="DIEM" ToRole="MONHOC" />
+    <NavigationProperty Name="SINHVIEN" Relationship="Self.FK_DIEM_SV" FromRole="DIEM" ToRole="SINHVIEN" />
+  </EntityType>
+  <EntityType Name="KHOA">
+    <Key>
+      <PropertyRef Name="MAKHOA" />
+    </Key>
+    <Property Name="MAKHOA" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="TENKHOA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="LOPs" Relationship="Self.FK_LOP_KHOA" FromRole="KHOA" ToRole="LOP" />
+  </EntityType>
+  <EntityType Name="LOP">
+    <Key>
+      <PropertyRef Name="MALOP" />
+    </Key>
+    <Property Name="MALOP" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="TENLOP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MAKHOA" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="KHOA" Relationship="Self.FK_LOP_KHOA" FromRole="LOP" ToRole="KHOA" />
+    <NavigationProperty Name="SINHVIENs" Relationship="Self.FK_SV_LOP" FromRole="LOP" ToRole="SINHVIEN" />
+  </EntityType>
+  <EntityType Name="MONHOC">
+    <Key>
+      <PropertyRef Name="MAMH" />
+    </Key>
+    <Property Name="MAMH" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="TENMH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DIEMs" Relationship="Self.FK_DIEM_MH" FromRole="MONHOC" ToRole="DIEM" />
+  </EntityType>
+  <EntityType Name="SINHVIEN">
+    <Key>
+      <PropertyRef Name="MASV" />
+    </Key>
+    <Property Name="MASV" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="HOTEN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NGAYSINH" Type="DateTime" Precision="0" />
+    <Property Name="MALOP" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="DIEMs" Relationship="Self.FK_DIEM_SV" FromRole="SINHVIEN" ToRole="DIEM" />
+    <NavigationProperty Name="LOP" Relationship="Self.FK_SV_LOP" FromRole="SINHVIEN" ToRole="LOP" />
+  </EntityType>
+  <Association Name="FK_DIEM_MH">
+    <End Role="MONHOC" Type="Self.MONHOC" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DIEM" Type="Self.DIEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MONHOC">
+        <PropertyRef Name="MAMH" />
+      </Principal>
+      <Dependent Role="DIEM">
+        <PropertyRef Name="MAMH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DIEM_SV">
+    <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DIEM" Type="Self.DIEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SINHVIEN">
+        <PropertyRef Name="MASV" />
+      </Principal>
+      <Dependent Role="DIEM">
+        <PropertyRef Name="MASV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LOP_KHOA">
+    <End Role="KHOA" Type="Self.KHOA" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LOP" Type="Self.LOP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHOA">
+        <PropertyRef Name="MAKHOA" />
+      </Principal>
+      <Dependent Role="LOP">
+        <PropertyRef Name="MAKHOA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SV_LOP">
+    <End Role="LOP" Type="Self.LOP" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOP">
+        <PropertyRef Name="MALOP" />
+      </Principal>
+      <Dependent Role="SINHVIEN">
+        <PropertyRef Name="MALOP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Database1Entities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DIEMs" EntityType="Self.DIEM" />
+    <EntitySet Name="KHOAs" EntityType="Self.KHOA" />
+    <EntitySet Name="LOPs" EntityType="Self.LOP" />
+    <EntitySet Name="MONHOCs" EntityType="Self.MONHOC" />
+    <EntitySet Name="SINHVIENs" EntityType="Self.SINHVIEN" />
+    <AssociationSet Name="FK_DIEM_MH" Association="Self.FK_DIEM_MH">
+      <End Role="MONHOC" EntitySet="MONHOCs" />
+      <End Role="DIEM" EntitySet="DIEMs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DIEM_SV" Association="Self.FK_DIEM_SV">
+      <End Role="SINHVIEN" EntitySet="SINHVIENs" />
+      <End Role="DIEM" EntitySet="DIEMs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LOP_KHOA" Association="Self.FK_LOP_KHOA">
+      <End Role="KHOA" EntitySet="KHOAs" />
+      <End Role="LOP" EntitySet="LOPs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SV_LOP" Association="Self.FK_SV_LOP">
+      <End Role="LOP" EntitySet="LOPs" />
+      <End Role="SINHVIEN" EntitySet="SINHVIENs" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

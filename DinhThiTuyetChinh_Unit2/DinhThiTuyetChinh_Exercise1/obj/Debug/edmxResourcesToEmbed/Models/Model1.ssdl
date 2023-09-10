@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DIEM">
+    <Key>
+      <PropertyRef Name="MASV" />
+      <PropertyRef Name="MAMH" />
+    </Key>
+    <Property Name="MASV" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="MAMH" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="DIEM" Type="float" />
+  </EntityType>
+  <EntityType Name="KHOA">
+    <Key>
+      <PropertyRef Name="MAKHOA" />
+    </Key>
+    <Property Name="MAKHOA" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="TENKHOA" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="LOP">
+    <Key>
+      <PropertyRef Name="MALOP" />
+    </Key>
+    <Property Name="MALOP" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="TENLOP" Type="nvarchar" MaxLength="50" />
+    <Property Name="MAKHOA" Type="char" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="MONHOC">
+    <Key>
+      <PropertyRef Name="MAMH" />
+    </Key>
+    <Property Name="MAMH" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="TENMH" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SINHVIEN">
+    <Key>
+      <PropertyRef Name="MASV" />
+    </Key>
+    <Property Name="MASV" Type="char" MaxLength="10" Nullable="false" />
+    <Property Name="HOTEN" Type="nvarchar" MaxLength="50" />
+    <Property Name="NGAYSINH" Type="date" />
+    <Property Name="MALOP" Type="char" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_DIEM_MH">
+    <End Role="MONHOC" Type="Self.MONHOC" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DIEM" Type="Self.DIEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MONHOC">
+        <PropertyRef Name="MAMH" />
+      </Principal>
+      <Dependent Role="DIEM">
+        <PropertyRef Name="MAMH" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DIEM_SV">
+    <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DIEM" Type="Self.DIEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SINHVIEN">
+        <PropertyRef Name="MASV" />
+      </Principal>
+      <Dependent Role="DIEM">
+        <PropertyRef Name="MASV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LOP_KHOA">
+    <End Role="KHOA" Type="Self.KHOA" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="LOP" Type="Self.LOP" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHOA">
+        <PropertyRef Name="MAKHOA" />
+      </Principal>
+      <Dependent Role="LOP">
+        <PropertyRef Name="MAKHOA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SV_LOP">
+    <End Role="LOP" Type="Self.LOP" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOP">
+        <PropertyRef Name="MALOP" />
+      </Principal>
+      <Dependent Role="SINHVIEN">
+        <PropertyRef Name="MALOP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Database1ModelStoreContainer">
+    <EntitySet Name="DIEM" EntityType="Self.DIEM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="KHOA" EntityType="Self.KHOA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LOP" EntityType="Self.LOP" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MONHOC" EntityType="Self.MONHOC" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SINHVIEN" EntityType="Self.SINHVIEN" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DIEM_MH" Association="Self.FK_DIEM_MH">
+      <End Role="MONHOC" EntitySet="MONHOC" />
+      <End Role="DIEM" EntitySet="DIEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DIEM_SV" Association="Self.FK_DIEM_SV">
+      <End Role="SINHVIEN" EntitySet="SINHVIEN" />
+      <End Role="DIEM" EntitySet="DIEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LOP_KHOA" Association="Self.FK_LOP_KHOA">
+      <End Role="KHOA" EntitySet="KHOA" />
+      <End Role="LOP" EntitySet="LOP" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SV_LOP" Association="Self.FK_SV_LOP">
+      <End Role="LOP" EntitySet="LOP" />
+      <End Role="SINHVIEN" EntitySet="SINHVIEN" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

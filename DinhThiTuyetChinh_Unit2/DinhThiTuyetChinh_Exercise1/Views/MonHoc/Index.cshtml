@@ -1,0 +1,21 @@
+﻿@model List<DinhThiTuyetChinh_Exercise1.Models.MONHOC>
+@{
+    ViewBag.Title = "MonHoc";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>MonHoc</h2>
+
+<table class="table">
+    <tr>
+    <th>Mã môn học</th>
+    <th>Tên môn học</th>
+    </tr>
+    @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.TENMH</td>
+                    <td>@item.MAMH</td>
+                </tr>
+            }
+</table>

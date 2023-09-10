@@ -1,0 +1,332 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DIEM">
+          <Key>
+            <PropertyRef Name="MASV" />
+            <PropertyRef Name="MAMH" />
+          </Key>
+          <Property Name="MASV" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="MAMH" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="DIEM" Type="float" />
+        </EntityType>
+        <EntityType Name="KHOA">
+          <Key>
+            <PropertyRef Name="MAKHOA" />
+          </Key>
+          <Property Name="MAKHOA" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TENKHOA" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="LOP">
+          <Key>
+            <PropertyRef Name="MALOP" />
+          </Key>
+          <Property Name="MALOP" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TENLOP" Type="nvarchar" MaxLength="50" />
+          <Property Name="MAKHOA" Type="char" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="MONHOC">
+          <Key>
+            <PropertyRef Name="MAMH" />
+          </Key>
+          <Property Name="MAMH" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TENMH" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SINHVIEN">
+          <Key>
+            <PropertyRef Name="MASV" />
+          </Key>
+          <Property Name="MASV" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="HOTEN" Type="nvarchar" MaxLength="50" />
+          <Property Name="NGAYSINH" Type="date" />
+          <Property Name="MALOP" Type="char" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_DIEM_MH">
+          <End Role="MONHOC" Type="Self.MONHOC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DIEM" Type="Self.DIEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MONHOC">
+              <PropertyRef Name="MAMH" />
+            </Principal>
+            <Dependent Role="DIEM">
+              <PropertyRef Name="MAMH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIEM_SV">
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DIEM" Type="Self.DIEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MASV" />
+            </Principal>
+            <Dependent Role="DIEM">
+              <PropertyRef Name="MASV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOP_KHOA">
+          <End Role="KHOA" Type="Self.KHOA" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LOP" Type="Self.LOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHOA">
+              <PropertyRef Name="MAKHOA" />
+            </Principal>
+            <Dependent Role="LOP">
+              <PropertyRef Name="MAKHOA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SV_LOP">
+          <End Role="LOP" Type="Self.LOP" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOP">
+              <PropertyRef Name="MALOP" />
+            </Principal>
+            <Dependent Role="SINHVIEN">
+              <PropertyRef Name="MALOP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="DIEM" EntityType="Self.DIEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KHOA" EntityType="Self.KHOA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOP" EntityType="Self.LOP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MONHOC" EntityType="Self.MONHOC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SINHVIEN" EntityType="Self.SINHVIEN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DIEM_MH" Association="Self.FK_DIEM_MH">
+            <End Role="MONHOC" EntitySet="MONHOC" />
+            <End Role="DIEM" EntitySet="DIEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIEM_SV" Association="Self.FK_DIEM_SV">
+            <End Role="SINHVIEN" EntitySet="SINHVIEN" />
+            <End Role="DIEM" EntitySet="DIEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOP_KHOA" Association="Self.FK_LOP_KHOA">
+            <End Role="KHOA" EntitySet="KHOA" />
+            <End Role="LOP" EntitySet="LOP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SV_LOP" Association="Self.FK_SV_LOP">
+            <End Role="LOP" EntitySet="LOP" />
+            <End Role="SINHVIEN" EntitySet="SINHVIEN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="DIEM">
+          <Key>
+            <PropertyRef Name="MASV" />
+            <PropertyRef Name="MAMH" />
+          </Key>
+          <Property Name="MASV" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="MAMH" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DIEM1" Type="Double" />
+          <NavigationProperty Name="MONHOC" Relationship="Self.FK_DIEM_MH" FromRole="DIEM" ToRole="MONHOC" />
+          <NavigationProperty Name="SINHVIEN" Relationship="Self.FK_DIEM_SV" FromRole="DIEM" ToRole="SINHVIEN" />
+        </EntityType>
+        <EntityType Name="KHOA">
+          <Key>
+            <PropertyRef Name="MAKHOA" />
+          </Key>
+          <Property Name="MAKHOA" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TENKHOA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LOPs" Relationship="Self.FK_LOP_KHOA" FromRole="KHOA" ToRole="LOP" />
+        </EntityType>
+        <EntityType Name="LOP">
+          <Key>
+            <PropertyRef Name="MALOP" />
+          </Key>
+          <Property Name="MALOP" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TENLOP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MAKHOA" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="KHOA" Relationship="Self.FK_LOP_KHOA" FromRole="LOP" ToRole="KHOA" />
+          <NavigationProperty Name="SINHVIENs" Relationship="Self.FK_SV_LOP" FromRole="LOP" ToRole="SINHVIEN" />
+        </EntityType>
+        <EntityType Name="MONHOC">
+          <Key>
+            <PropertyRef Name="MAMH" />
+          </Key>
+          <Property Name="MAMH" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TENMH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DIEMs" Relationship="Self.FK_DIEM_MH" FromRole="MONHOC" ToRole="DIEM" />
+        </EntityType>
+        <EntityType Name="SINHVIEN">
+          <Key>
+            <PropertyRef Name="MASV" />
+          </Key>
+          <Property Name="MASV" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="HOTEN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NGAYSINH" Type="DateTime" Precision="0" />
+          <Property Name="MALOP" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="DIEMs" Relationship="Self.FK_DIEM_SV" FromRole="SINHVIEN" ToRole="DIEM" />
+          <NavigationProperty Name="LOP" Relationship="Self.FK_SV_LOP" FromRole="SINHVIEN" ToRole="LOP" />
+        </EntityType>
+        <Association Name="FK_DIEM_MH">
+          <End Role="MONHOC" Type="Self.MONHOC" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DIEM" Type="Self.DIEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MONHOC">
+              <PropertyRef Name="MAMH" />
+            </Principal>
+            <Dependent Role="DIEM">
+              <PropertyRef Name="MAMH" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIEM_SV">
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DIEM" Type="Self.DIEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MASV" />
+            </Principal>
+            <Dependent Role="DIEM">
+              <PropertyRef Name="MASV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LOP_KHOA">
+          <End Role="KHOA" Type="Self.KHOA" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="LOP" Type="Self.LOP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KHOA">
+              <PropertyRef Name="MAKHOA" />
+            </Principal>
+            <Dependent Role="LOP">
+              <PropertyRef Name="MAKHOA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SV_LOP">
+          <End Role="LOP" Type="Self.LOP" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOP">
+              <PropertyRef Name="MALOP" />
+            </Principal>
+            <Dependent Role="SINHVIEN">
+              <PropertyRef Name="MALOP" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="DIEMs" EntityType="Self.DIEM" />
+          <EntitySet Name="KHOAs" EntityType="Self.KHOA" />
+          <EntitySet Name="LOPs" EntityType="Self.LOP" />
+          <EntitySet Name="MONHOCs" EntityType="Self.MONHOC" />
+          <EntitySet Name="SINHVIENs" EntityType="Self.SINHVIEN" />
+          <AssociationSet Name="FK_DIEM_MH" Association="Self.FK_DIEM_MH">
+            <End Role="MONHOC" EntitySet="MONHOCs" />
+            <End Role="DIEM" EntitySet="DIEMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIEM_SV" Association="Self.FK_DIEM_SV">
+            <End Role="SINHVIEN" EntitySet="SINHVIENs" />
+            <End Role="DIEM" EntitySet="DIEMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LOP_KHOA" Association="Self.FK_LOP_KHOA">
+            <End Role="KHOA" EntitySet="KHOAs" />
+            <End Role="LOP" EntitySet="LOPs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SV_LOP" Association="Self.FK_SV_LOP">
+            <End Role="LOP" EntitySet="LOPs" />
+            <End Role="SINHVIEN" EntitySet="SINHVIENs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities1">
+          <EntitySetMapping Name="DIEMs">
+            <EntityTypeMapping TypeName="Database1Model.DIEM">
+              <MappingFragment StoreEntitySet="DIEM">
+                <ScalarProperty Name="MASV" ColumnName="MASV" />
+                <ScalarProperty Name="MAMH" ColumnName="MAMH" />
+                <ScalarProperty Name="DIEM1" ColumnName="DIEM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KHOAs">
+            <EntityTypeMapping TypeName="Database1Model.KHOA">
+              <MappingFragment StoreEntitySet="KHOA">
+                <ScalarProperty Name="MAKHOA" ColumnName="MAKHOA" />
+                <ScalarProperty Name="TENKHOA" ColumnName="TENKHOA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOPs">
+            <EntityTypeMapping TypeName="Database1Model.LOP">
+              <MappingFragment StoreEntitySet="LOP">
+                <ScalarProperty Name="MALOP" ColumnName="MALOP" />
+                <ScalarProperty Name="TENLOP" ColumnName="TENLOP" />
+                <ScalarProperty Name="MAKHOA" ColumnName="MAKHOA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MONHOCs">
+            <EntityTypeMapping TypeName="Database1Model.MONHOC">
+              <MappingFragment StoreEntitySet="MONHOC">
+                <ScalarProperty Name="MAMH" ColumnName="MAMH" />
+                <ScalarProperty Name="TENMH" ColumnName="TENMH" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SINHVIENs">
+            <EntityTypeMapping TypeName="Database1Model.SINHVIEN">
+              <MappingFragment StoreEntitySet="SINHVIEN">
+                <ScalarProperty Name="MASV" ColumnName="MASV" />
+                <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+                <ScalarProperty Name="NGAYSINH" ColumnName="NGAYSINH" />
+                <ScalarProperty Name="MALOP" ColumnName="MALOP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
