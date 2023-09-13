@@ -1,0 +1,31 @@
+﻿@model List<DinhThiTuyetChinh_Exercise3.Models.KhoaModel>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>showKhoa</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+
+</head>
+<body>
+    <div>
+        <table class="table">
+            <tr>
+                <th>Mã khoa</th>
+                <th>Tên khoa</th>
+            </tr>
+            <tr>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                </tr>
+            }
+                </tr>
+            </table>
+        </div>
+</body>
+</html>

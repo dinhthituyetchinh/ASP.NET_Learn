@@ -1,0 +1,33 @@
+﻿@model List<DinhThiTuyetChinh_Exercise1.Models.Student>
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>showMonHoc</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+</head>
+<body>
+    <div> 
+        <table class="table">
+            <tr>
+                <th>Mã môn học</th>
+                <th>Tên môn học</th>
+            </tr>
+            <tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                <td>@item.MonHocId</td>
+                <td>@item.MonHocName</td>
+                        </tr>
+            }
+                </tr>
+
+
+            </table>
+    </div>
+</body>
+</html>
