@@ -1,26 +1,50 @@
-﻿
-
+﻿@model DemoXuLyDuLieu.Models.Subject
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
     <title>addSubject</title>
     <link rel="stylesheet" href="~/Content/bootstrap.css" />
 
 </head>
 <body>
-    <form method="post" action="~/Subject/addSubject">
+    <div class="container">
+        <div class="col align-self-center">
+            <form method="post" action="~/Subject/addSubject">
 
-        <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">ID</label>
-            <input type="text" name="id" class="form-control" id="exampleInputEmail1" >
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">ID</label>
+                    <input type="text" name="id" class="form-control" id="exampleInputEmail1">
+                    
+                    @if (ViewData["err"] == "e1")
+        {
+            <p class="text-danger">Mã môn học không thể rỗng</p>
+        }
+
+
+        @if (ViewData["err1"] == "e2")
+        {
+            <p class="text-danger">Mã môn học phải nhỏ hơn hoặc bằng 10 ký tự</p>
+        }
+
+        @if (ViewData["err2"] == "e3")
+        {
+            <p class="text-danger">Trùng mã môn học</p>
+        }
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Name</label>
+                    <input type="text" name="name" class="form-control" id="exampleInputPassword1">
+
+                </div>
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
         </div>
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Name</label>
-            <input type="text"name ="name" class="form-control" id="exampleInputPassword1">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
+    
 </body>
 </html>

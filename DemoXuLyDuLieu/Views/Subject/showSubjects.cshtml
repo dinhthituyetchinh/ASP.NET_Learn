@@ -6,11 +6,20 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
     <title>showSubjects</title>
     <link rel="stylesheet" href="~/Content/bootstrap.css" />
 
 </head>
 <body>
+    <h1 class="text-center">THÔNG TIN BẢNG MÔN HỌC</h1>
+    <form class="p-3" method="post" action="~/Subject/findSubject">
+        <h3>Tìm kiếm thông tin</h3> 
+        <p>Nhập tên môn học</p>
+        <input type="text" name="name"/> <br />
+        <br />       
+            <button type="submit" class="btn btn-success"> Tìm kiếm</button>
+    </form>
     <table class="table">
         <tr>
             <th>Mã môn học</th>
@@ -24,17 +33,21 @@
                 <td>@item.SubjectID</td>
                 <td>@item.SubjectName</td>
                 <td>
-                    <a  href="~/Subject/deleteSubject/@item.SubjectID" type="button" class="btn btn-success">Xoá</a>
+                    <a href="~/Subject/deleteSubject/@item.SubjectID" type="button" class="btn btn-success">Xoá</a>
                     <a href="~/Subject/updateSubject/@item.SubjectID" type="button" class="btn btn-success">Sửa</a>
 
                 </td>
 
             </tr>
-             }
-         </tr>
-    </table>
-    <div>
-        <a href="~/Subject/addSubject" type="button" class="btn btn-success"> Thêm</a>
-    </div>
-</body>
+        }
+            </tr>
+
+        </table>
+    <p>
+        <h5>Tổng số môn học: @Model.Count</h5>
+    </p>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <a href="~/Subject/addSubject" type="button" class="btn btn-success"> Thêm</a>
+        </div>
+    </body>
 </html>

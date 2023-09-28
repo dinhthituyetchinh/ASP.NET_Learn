@@ -14,9 +14,31 @@ namespace DemoXuLyDuLieu.Controllers
         {
             try
             {
+                List<Subject> filterSubject = TempData["filterSubject"] as List<Subject>;
+                if (filterSubject != null && filterSubject.Count > 0 )
+                {
+                    return View(filterSubject);
+                }  
+                
                List<Subject> s =  SubjectService.ExcuteSQL();
                 return View(s);
             } catch(Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult findSubject(string name)
+        {
+            try
+            {
+                List<Subject> s = SubjectService.ExcuteSQL();
+                List<Subject> filterSubject = s.Where(subject => subject.SubjectName.Contains(name)).ToList();
+                TempData["filterSubject"] = filterSubject;
+                return RedirectToAction("showSubjects");
+            }
+            catch (Exception ex)
             {
                 return Content(ex.Message);
             }
@@ -32,8 +54,25 @@ namespace DemoXuLyDuLieu.Controllers
         {
             try
             {
-                 SubjectService.addSql(id, name);
+                if (id == "")
+                {
+                    ViewData["err"] = "e1";
+                    return View("addSubject");
+                }
+                if (id.Length > 10)
+                {
+                    ViewData["err1"] = "e2";
+                    return View("addSubject");
+                }
+                if (SubjectService.checkPrimary(id) == false)
+                {
+                    ViewData["err2"] = "e3";
+                    return View("addSubject");
+                }
+                SubjectService.addSql(id, name);
                 return RedirectToAction("showSubjects");
+
+               
             }
             catch(Exception ex)
             {
@@ -81,5 +120,8 @@ namespace DemoXuLyDuLieu.Controllers
                 return Content(ex.Message);
             }
         }
+
+       
+
     }
 }

@@ -4,15 +4,31 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
     <title>updateSubject</title>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+
 </head>
 <body>
-    <form method="post" action="~/Subject/updateSubjects">
-        <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Name</label>
-            <input type="text" name="name" value="@Model.SubjectName.Trim()" class="form-control" id="exampleInputPassword1">
+    <div class="container">
+        <div class="row">
+            <div class="col align-self-center">
+                <table class="table">
+                    <form method="post" action="~/Subject/updateSubjects">
+
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Name</label>
+                            <input type="text" name="name" value="@Model.SubjectName.Trim()" class="form-control" id="exampleInputPassword1">
+                        </div>
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </table>
+
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    </div>
+    
 </body>
 </html>

@@ -39,23 +39,54 @@ namespace DemoXuLyDuLieu.Services
             return subjectList;
         }
 
-        public static void addSql(string id, string name)
+        public static bool checkPrimary(string ma)
         {
-            using (SqlConnection connection = new SqlConnection())
+            try
             {
-                connection.ConnectionString = conStr;
-                if (connection.State == System.Data.ConnectionState.Closed)
+                using (SqlConnection conn = new SqlConnection(conStr))
                 {
-                    connection.Open();
-                }
-                string selectStr = $"INSERT INTO MONHOC VALUES('{id}', '{name}')";
-                SqlCommand cmd = new SqlCommand(selectStr, connection);
-                cmd.ExecuteNonQuery();
-                if (connection.State == System.Data.ConnectionState.Open)
-                {
-                    connection.Close();
+                    if (conn.State == System.Data.ConnectionState.Closed)
+                    {
+                        conn.Open();
+                    }
+                    string selectStr = "SELECT COUNT(*) FROM KHOA WHERE MAKHOA='" + ma + "'";
+                    SqlCommand cmd = new SqlCommand(selectStr, conn);
+                    int count = (int)cmd.ExecuteScalar();
+                    
+                    if (conn.State == System.Data.ConnectionState.Open)
+                    {
+                        conn.Close();
+                    }
+                    if (count >= 1)
+                        return false;
+                    return true;
                 }
             }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public static void addSql(string id, string name)
+        {
+                using (SqlConnection connection = new SqlConnection())
+                {
+                    connection.ConnectionString = conStr;
+                    if (connection.State == System.Data.ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
+                    string selectStr = $"INSERT INTO MONHOC VALUES('{id}', N'{name}')";
+                    SqlCommand cmd = new SqlCommand(selectStr, connection);
+                    cmd.ExecuteNonQuery();
+                    if (connection.State == System.Data.ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+
+           
         }
 
         public static void deleteSql(string id)
