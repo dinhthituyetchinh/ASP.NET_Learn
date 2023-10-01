@@ -116,14 +116,12 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
-    <Compile Include="Controllers\SubjectController2.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SubjectService.cs" />
-    <Compile Include="Services\SubjectService2.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -153,7 +151,6 @@
     <Content Include="Views\Subject\showSubjects.cshtml" />
     <Content Include="Views\Subject\addSubject.cshtml" />
     <Content Include="Views\Subject\updateSubject.cshtml" />
-    <Content Include="Views\SubjectController2\show.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
